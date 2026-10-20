@@ -1,0 +1,653 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oksana Luchko — QA Portfolio</title>
+  <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #0F1117;
+      --card: #1A1D27;
+      --card2: #1F2235;
+      --accent: #7C6AF7;
+      --accent2: #5BBFAA;
+      --accent3: #F0A04B;
+      --text: #E8E6F0;
+      --muted: #8A879A;
+      --border: #2A2D3E;
+    }
+
+    body {
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+      padding: 2rem 1rem;
+    }
+
+    .container { max-width: 1100px; margin: 0 auto; }
+
+    /* ── HEADER ── */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 1rem;
+      margin-bottom: 2.5rem;
+    }
+
+    .header-left h1 {
+      font-size: 1.8rem;
+      font-weight: 700;
+      background: linear-gradient(135deg, var(--accent), var(--accent2));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+    }
+
+    .header-left p {
+      color: var(--muted);
+      font-size: 0.9rem;
+      margin-top: 0.2rem;
+      letter-spacing: 0.05em;
+    }
+
+    .header-links { display: flex; gap: 0.6rem; flex-wrap: wrap; }
+
+    .btn {
+      padding: 0.4rem 0.9rem;
+      border-radius: 6px;
+      font-size: 0.78rem;
+      font-weight: 600;
+      text-decoration: none;
+      letter-spacing: 0.03em;
+      transition: opacity 0.2s;
+    }
+    .btn:hover { opacity: 0.8; }
+    .btn-primary { background: var(--accent); color: #fff; }
+    .btn-outline { border: 1px solid var(--border); color: var(--muted); background: transparent; }
+
+    /* ── STAT CARDS ── */
+    .stats-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 1rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .stat-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.2rem 1rem;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .stat-card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+    }
+    .stat-card:nth-child(1)::before { background: var(--accent); }
+    .stat-card:nth-child(2)::before { background: var(--accent2); }
+    .stat-card:nth-child(3)::before { background: var(--accent3); }
+    .stat-card:nth-child(4)::before { background: #E05C8A; }
+    .stat-card:nth-child(5)::before { background: #5B9BF7; }
+    .stat-card:nth-child(6)::before { background: #A0E05B; }
+
+    .stat-number {
+      font-size: 2rem;
+      font-weight: 800;
+      line-height: 1;
+      margin-bottom: 0.3rem;
+    }
+    .stat-card:nth-child(1) .stat-number { color: var(--accent); }
+    .stat-card:nth-child(2) .stat-number { color: var(--accent2); }
+    .stat-card:nth-child(3) .stat-number { color: var(--accent3); }
+    .stat-card:nth-child(4) .stat-number { color: #E05C8A; }
+    .stat-card:nth-child(5) .stat-number { color: #5B9BF7; }
+    .stat-card:nth-child(6) .stat-number { color: #A0E05B; }
+
+    .stat-label {
+      font-size: 0.72rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+    }
+
+    /* ── GRID LAYOUT ── */
+    .grid-2 {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    .grid-3 {
+      display: grid;
+      grid-template-columns: 1fr 1fr 1fr;
+      gap: 1.5rem;
+      margin-bottom: 1.5rem;
+    }
+
+    @media (max-width: 750px) {
+      .grid-2, .grid-3 { grid-template-columns: 1fr; }
+    }
+
+    /* ── CARDS ── */
+    .card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 1.4rem;
+    }
+
+    .card-title {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.12em;
+      color: var(--muted);
+      margin-bottom: 1.2rem;
+    }
+
+    .chart-wrap {
+      position: relative;
+      height: 220px;
+    }
+
+    /* ── TIMELINE ── */
+    .timeline { display: flex; flex-direction: column; gap: 0; }
+
+    .timeline-item {
+      display: grid;
+      grid-template-columns: 80px 20px 1fr;
+      gap: 0 0.8rem;
+      align-items: start;
+      padding-bottom: 1.2rem;
+      position: relative;
+    }
+
+    .tl-date {
+      font-size: 0.7rem;
+      color: var(--muted);
+      text-align: right;
+      padding-top: 3px;
+      line-height: 1.3;
+    }
+
+    .tl-line {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .tl-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      flex-shrink: 0;
+      margin-top: 4px;
+    }
+
+    .tl-connector {
+      width: 2px;
+      flex: 1;
+      background: var(--border);
+      min-height: 30px;
+    }
+
+    .timeline-item:last-child .tl-connector { display: none; }
+
+    .tl-content { padding-bottom: 0.2rem; }
+
+    .tl-company {
+      font-size: 0.88rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .tl-role {
+      font-size: 0.74rem;
+      color: var(--muted);
+      margin-top: 0.1rem;
+    }
+
+    .tl-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem;
+      margin-top: 0.5rem;
+    }
+
+    .tl-tag {
+      font-size: 0.65rem;
+      padding: 0.15rem 0.5rem;
+      border-radius: 4px;
+      background: var(--card2);
+      color: var(--muted);
+      border: 1px solid var(--border);
+    }
+
+    /* ── TOOLS ── */
+    .tools-grid {
+      display: flex;
+      flex-direction: column;
+      gap: 0.7rem;
+    }
+
+    .tool-row { display: flex; flex-direction: column; gap: 0.25rem; }
+
+    .tool-header {
+      display: flex;
+      justify-content: space-between;
+      font-size: 0.78rem;
+    }
+
+    .tool-name { color: var(--text); }
+    .tool-level { color: var(--muted); font-size: 0.7rem; }
+
+    .tool-bar {
+      height: 5px;
+      background: var(--border);
+      border-radius: 3px;
+      overflow: hidden;
+    }
+
+    .tool-fill {
+      height: 100%;
+      border-radius: 3px;
+      transition: width 1s ease;
+    }
+
+    /* ── PROJECTS ── */
+    .projects-list { display: flex; flex-direction: column; gap: 0.8rem; }
+
+    .project-item {
+      background: var(--card2);
+      border: 1px solid var(--border);
+      border-radius: 8px;
+      padding: 0.9rem 1rem;
+      display: grid;
+      grid-template-columns: 1fr auto;
+      gap: 0.5rem;
+      align-items: start;
+    }
+
+    .project-name {
+      font-size: 0.83rem;
+      font-weight: 600;
+      color: var(--text);
+    }
+
+    .project-desc {
+      font-size: 0.72rem;
+      color: var(--muted);
+      margin-top: 0.2rem;
+    }
+
+    .project-badge {
+      font-size: 0.65rem;
+      padding: 0.2rem 0.5rem;
+      border-radius: 4px;
+      font-weight: 600;
+      white-space: nowrap;
+    }
+
+    .badge-web { background: rgba(124,106,247,0.15); color: var(--accent); }
+    .badge-mobile { background: rgba(91,191,170,0.15); color: var(--accent2); }
+    .badge-desktop { background: rgba(240,160,75,0.15); color: var(--accent3); }
+    .badge-saas { background: rgba(91,155,247,0.15); color: #5B9BF7; }
+
+    /* ── FOOTER ── */
+    .footer {
+      text-align: center;
+      margin-top: 2rem;
+      padding-top: 1.5rem;
+      border-top: 1px solid var(--border);
+      font-size: 0.75rem;
+      color: var(--muted);
+    }
+    .footer a { color: var(--accent); text-decoration: none; }
+  </style>
+</head>
+<body>
+<div class="container">
+
+  <!-- HEADER -->
+  <div class="header">
+    <div class="header-left">
+      <h1>Oksana Luchko</h1>
+      <p>QA Engineer · Manual &amp; AI-driven Testing</p>
+    </div>
+    <div class="header-links">
+      <a class="btn btn-primary" href="index.html">View CV</a>
+      <a class="btn btn-outline" href="https://linkedin.com/in/oksana-luchko" target="_blank">LinkedIn</a>
+      <a class="btn btn-outline" href="https://github.com/OksanaLuchko" target="_blank">GitHub</a>
+    </div>
+  </div>
+
+  <!-- STATS -->
+  <div class="stats-grid">
+    <div class="stat-card">
+      <div class="stat-number">100+</div>
+      <div class="stat-label">Test Cases Authored</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">4</div>
+      <div class="stat-label">Companies</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">10+</div>
+      <div class="stat-label">Projects</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">15+</div>
+      <div class="stat-label">Releases Tested</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">2.5</div>
+      <div class="stat-label">Years Experience</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-number">4</div>
+      <div class="stat-label">App Platforms</div>
+    </div>
+  </div>
+
+  <!-- CHARTS ROW -->
+  <div class="grid-2">
+    <div class="card">
+      <div class="card-title">Testing Types Coverage</div>
+      <div class="chart-wrap">
+        <canvas id="testingChart"></canvas>
+      </div>
+    </div>
+    <div class="card">
+      <div class="card-title">Skills Radar</div>
+      <div class="chart-wrap">
+        <canvas id="radarChart"></canvas>
+      </div>
+    </div>
+  </div>
+
+  <!-- TIMELINE + TOOLS -->
+  <div class="grid-2">
+
+    <div class="card">
+      <div class="card-title">Career Timeline</div>
+      <div class="timeline">
+
+        <div class="timeline-item">
+          <div class="tl-date">01.2026<br>10.2026</div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:#7C6AF7"></div>
+            <div class="tl-connector"></div>
+          </div>
+          <div class="tl-content">
+            <div class="tl-company">Halo Lab</div>
+            <div class="tl-role">QA Engineer</div>
+            <div class="tl-tags">
+              <span class="tl-tag">AI-driven QA</span>
+              <span class="tl-tag">Android</span>
+              <span class="tl-tag">SaaS</span>
+              <span class="tl-tag">Multi-tenant</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">09.2024<br>12.2025</div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:#5BBFAA"></div>
+            <div class="tl-connector"></div>
+          </div>
+          <div class="tl-content">
+            <div class="tl-company">Technomatix</div>
+            <div class="tl-role">QA Engineer</div>
+            <div class="tl-tags">
+              <span class="tl-tag">LMS Platform</span>
+              <span class="tl-tag">API Testing</span>
+              <span class="tl-tag">Jenkins</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">07.2024<br>09.2024</div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:#F0A04B"></div>
+            <div class="tl-connector"></div>
+          </div>
+          <div class="tl-content">
+            <div class="tl-company">i love my team</div>
+            <div class="tl-role">QA Engineer</div>
+            <div class="tl-tags">
+              <span class="tl-tag">Jira</span>
+              <span class="tl-tag">Compatibility</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">03.2024<br>04.2024</div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:#E05C8A"></div>
+            <div class="tl-connector"></div>
+          </div>
+          <div class="tl-content">
+            <div class="tl-company">Iryna Prudko Website</div>
+            <div class="tl-role">QA Engineer · QA Group Lead</div>
+            <div class="tl-tags">
+              <span class="tl-tag">Lead</span>
+              <span class="tl-tag">Load Testing</span>
+              <span class="tl-tag">Performance</span>
+            </div>
+          </div>
+        </div>
+
+        <div class="timeline-item">
+          <div class="tl-date">09.2023<br>01.2024</div>
+          <div class="tl-line">
+            <div class="tl-dot" style="background:#5B9BF7"></div>
+            <div class="tl-connector"></div>
+          </div>
+          <div class="tl-content">
+            <div class="tl-company">GoIT</div>
+            <div class="tl-role">QA Engineer Manual — course</div>
+            <div class="tl-tags">
+              <span class="tl-tag">Education</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Tools Proficiency</div>
+      <div class="tools-grid">
+        <div class="tool-row">
+          <div class="tool-header"><span class="tool-name">Claude / Cursor (AI QA)</span><span class="tool-level">Expert</span></div>
+          <div class="tool-bar"><div class="tool-fill" style="width:95%;background:linear-gradient(90deg,#7C6AF7,#A08FF7)"></div></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-header"><span class="tool-name">Qase / QA Vault / TestRail</span><span class="tool-level">Expert</span></div>
+          <div class="tool-bar"><div class="tool-fill" style="width:90%;background:linear-gradient(90deg,#5BBFAA,#7FD4C2)"></div></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-header"><span class="tool-name">Jira / ClickUp / Confluence</span><span class="tool-level">Expert</span></div>
+          <div class="tool-bar"><div class="tool-fill" style="width:90%;background:linear-gradient(90deg,#5BBFAA,#7FD4C2)"></div></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-header"><span class="tool-name">Postman / Swagger</span><span class="tool-level">Intermediate</span></div>
+          <div class="tool-bar"><div class="tool-fill" style="width:72%;background:linear-gradient(90deg,#F0A04B,#F5C07A)"></div></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-header"><span class="tool-name">ADB / adb logcat</span><span class="tool-level">Intermediate</span></div>
+          <div class="tool-bar"><div class="tool-fill" style="width:68%;background:linear-gradient(90deg,#F0A04B,#F5C07A)"></div></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-header"><span class="tool-name">Chrome DevTools</span><span class="tool-level">Intermediate</span></div>
+          <div class="tool-bar"><div class="tool-fill" style="width:70%;background:linear-gradient(90deg,#F0A04B,#F5C07A)"></div></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-header"><span class="tool-name">SQL / MySQL</span><span class="tool-level">Basic</span></div>
+          <div class="tool-bar"><div class="tool-fill" style="width:45%;background:linear-gradient(90deg,#5B9BF7,#89B8F7)"></div></div>
+        </div>
+        <div class="tool-row">
+          <div class="tool-header"><span class="tool-name">Jenkins / GitHub CLI</span><span class="tool-level">Basic</span></div>
+          <div class="tool-bar"><div class="tool-fill" style="width:40%;background:linear-gradient(90deg,#5B9BF7,#89B8F7)"></div></div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PROJECTS -->
+  <div class="card" style="margin-bottom:1.5rem">
+    <div class="card-title">Notable Projects</div>
+    <div class="grid-2">
+      <div class="projects-list">
+        <div class="project-item">
+          <div>
+            <div class="project-name">Multi-tenant AI SaaS Platform</div>
+            <div class="project-desc">Next.js · Supabase · Stripe · 15+ stories/releases</div>
+          </div>
+          <span class="project-badge badge-saas">SaaS</span>
+        </div>
+        <div class="project-item">
+          <div>
+            <div class="project-name">Creator-Agency Management SaaS</div>
+            <div class="project-desc">Electron + React · WebSocket · RBAC · 100+ test cases</div>
+          </div>
+          <span class="project-badge badge-desktop">Desktop</span>
+        </div>
+        <div class="project-item">
+          <div>
+            <div class="project-name">Android Mobile App</div>
+            <div class="project-desc">ADB · WorkManager · Supabase · offline scenarios</div>
+          </div>
+          <span class="project-badge badge-mobile">Mobile</span>
+        </div>
+      </div>
+      <div class="projects-list">
+        <div class="project-item">
+          <div>
+            <div class="project-name">Real Estate SaaS Platform</div>
+            <div class="project-desc">Agent profiles · licensing verification · multi-repo</div>
+          </div>
+          <span class="project-badge badge-saas">SaaS</span>
+        </div>
+        <div class="project-item">
+          <div>
+            <div class="project-name">Corporate LMS Platform</div>
+            <div class="project-desc">Multi-role web · API + DB · Jenkins environments</div>
+          </div>
+          <span class="project-badge badge-web">Web</span>
+        </div>
+        <div class="project-item">
+          <div>
+            <div class="project-name">Iryna Prudko Website</div>
+            <div class="project-desc">QA Lead · load testing JMeter · performance</div>
+          </div>
+          <span class="project-badge badge-web">Web</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div class="footer">
+    Built with vanilla HTML · <a href="index.html">Full CV →</a>
+  </div>
+
+</div>
+
+<script>
+  const muted = '#8A879A';
+  const border = '#2A2D3E';
+  const gridColor = 'rgba(255,255,255,0.05)';
+
+  Chart.defaults.color = muted;
+  Chart.defaults.borderColor = border;
+
+  // Testing Types Bar Chart
+  new Chart(document.getElementById('testingChart'), {
+    type: 'bar',
+    data: {
+      labels: ['Manual', 'Regression', 'Smoke/Sanity', 'API', 'Mobile', 'Compatibility', 'Performance', 'Load'],
+      datasets: [{
+        data: [10, 9, 8, 7, 7, 6, 5, 4],
+        backgroundColor: [
+          'rgba(124,106,247,0.8)',
+          'rgba(124,106,247,0.65)',
+          'rgba(91,191,170,0.8)',
+          'rgba(91,191,170,0.65)',
+          'rgba(240,160,75,0.8)',
+          'rgba(240,160,75,0.65)',
+          'rgba(224,92,138,0.8)',
+          'rgba(91,155,247,0.8)',
+        ],
+        borderRadius: 4,
+        borderSkipped: false,
+      }]
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: {
+          grid: { color: gridColor },
+          ticks: { display: false },
+          border: { display: false },
+        },
+        y: {
+          grid: { display: false },
+          border: { display: false },
+          ticks: { font: { size: 11 } }
+        }
+      }
+    }
+  });
+
+  // Skills Radar
+  new Chart(document.getElementById('radarChart'), {
+    type: 'radar',
+    data: {
+      labels: ['Test Design', 'Bug Reporting', 'API Testing', 'Mobile Testing', 'AI-driven QA', 'Documentation', 'Requirements Analysis'],
+      datasets: [{
+        data: [9, 9, 7, 7, 9, 8, 8],
+        backgroundColor: 'rgba(124,106,247,0.15)',
+        borderColor: 'rgba(124,106,247,0.8)',
+        borderWidth: 2,
+        pointBackgroundColor: 'rgba(124,106,247,1)',
+        pointRadius: 4,
+      }]
+    },
+    options: {
+      responsive: true,
+      maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        r: {
+          min: 0, max: 10,
+          grid: { color: gridColor },
+          angleLines: { color: gridColor },
+          pointLabels: { font: { size: 10 }, color: muted },
+          ticks: { display: false },
+        }
+      }
+    }
+  });
+</script>
+</body>
+</html>
