@@ -1,0 +1,524 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Oksana Luchko — QA Engineer</title>
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #EAE5D9;
+      --sidebar-bg: #D9D3C4;
+      --accent: #6B5B3E;
+      --text: #2C2A26;
+      --muted: #7A7060;
+      --highlight-bg: #F0EBE0;
+      --tag-bg: #D4CDB8;
+      --border: #C5BDA8;
+    }
+
+    body {
+      font-family: 'Georgia', serif;
+      background: #F5F2EC;
+      color: var(--text);
+      min-height: 100vh;
+      display: flex;
+      justify-content: center;
+      padding: 2rem 1rem;
+    }
+
+    .page {
+      display: grid;
+      grid-template-columns: 280px 1fr;
+      max-width: 960px;
+      width: 100%;
+      background: var(--bg);
+      box-shadow: 0 4px 32px rgba(0,0,0,0.12);
+    }
+
+    /* ── SIDEBAR ── */
+    .sidebar {
+      background: var(--sidebar-bg);
+      padding: 2.5rem 1.6rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .name-block h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      line-height: 1.1;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+      color: var(--text);
+    }
+
+    .name-block .title {
+      margin-top: 0.5rem;
+      font-size: 0.75rem;
+      letter-spacing: 0.15em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+    }
+
+    .contact-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.5rem;
+    }
+
+    .contact-list li {
+      font-size: 0.82rem;
+      font-family: 'Arial', sans-serif;
+      color: var(--text);
+      display: flex;
+      align-items: flex-start;
+      gap: 0.5rem;
+    }
+
+    .contact-list li .icon {
+      flex-shrink: 0;
+      width: 16px;
+      color: var(--accent);
+      font-style: normal;
+    }
+
+    .contact-list a {
+      color: var(--accent);
+      text-decoration: none;
+    }
+    .contact-list a:hover { text-decoration: underline; }
+
+    .section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 0.8rem;
+    }
+
+    .skill-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.35rem;
+    }
+
+    .skill-list li {
+      font-size: 0.82rem;
+      font-family: 'Arial', sans-serif;
+      padding: 0.3rem 0;
+      border-bottom: 1px solid var(--border);
+      color: var(--text);
+    }
+
+    .pill-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.4rem;
+    }
+
+    .pill {
+      background: var(--tag-bg);
+      border-radius: 2px;
+      padding: 0.25rem 0.6rem;
+      font-size: 0.75rem;
+      font-family: 'Arial', sans-serif;
+      color: var(--text);
+    }
+
+    .lang-list {
+      list-style: none;
+      display: flex;
+      flex-direction: column;
+      gap: 0.45rem;
+    }
+
+    .lang-list li {
+      font-size: 0.82rem;
+      font-family: 'Arial', sans-serif;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.35rem;
+    }
+
+    .edu-block + .edu-block { margin-top: 1rem; }
+
+    .edu-block .school {
+      font-size: 0.82rem;
+      font-weight: 700;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .edu-block .period {
+      font-size: 0.72rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      margin: 0.1rem 0;
+    }
+
+    .edu-block .degree {
+      font-size: 0.78rem;
+      font-family: 'Arial', sans-serif;
+      color: var(--text);
+    }
+
+    /* ── MAIN ── */
+    .main {
+      padding: 2.5rem 2rem;
+      display: flex;
+      flex-direction: column;
+      gap: 2rem;
+    }
+
+    .main-section-label {
+      font-size: 0.68rem;
+      letter-spacing: 0.2em;
+      text-transform: uppercase;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      font-weight: 700;
+      border-bottom: 1px solid var(--border);
+      padding-bottom: 0.4rem;
+      margin-bottom: 1rem;
+    }
+
+    .about-text {
+      font-size: 0.85rem;
+      line-height: 1.7;
+      font-family: 'Arial', sans-serif;
+      color: var(--text);
+    }
+
+    /* Work experience */
+    .job + .job { margin-top: 1.6rem; }
+
+    .job-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: baseline;
+      flex-wrap: wrap;
+      gap: 0.25rem;
+    }
+
+    .job-header .company {
+      font-size: 0.95rem;
+      font-weight: 700;
+      font-family: 'Arial', sans-serif;
+    }
+
+    .job-header .period {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      font-style: italic;
+    }
+
+    .job-subtitle {
+      font-size: 0.75rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      font-style: italic;
+      margin-bottom: 0.6rem;
+    }
+
+    .project-block {
+      margin-top: 0.8rem;
+    }
+
+    .project-name {
+      font-size: 0.85rem;
+      font-weight: 700;
+      color: var(--accent);
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 0.1rem;
+    }
+
+    .project-tech {
+      font-size: 0.73rem;
+      color: var(--muted);
+      font-family: 'Arial', sans-serif;
+      font-style: italic;
+      margin-bottom: 0.4rem;
+    }
+
+    .ai-block {
+      background: var(--highlight-bg);
+      border-left: 3px solid var(--accent);
+      padding: 0.7rem 0.9rem;
+      margin-bottom: 0.6rem;
+      border-radius: 0 2px 2px 0;
+    }
+
+    .ai-block .ai-label {
+      font-size: 0.72rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--accent);
+      font-family: 'Arial', sans-serif;
+      margin-bottom: 0.4rem;
+    }
+
+    ul.bullets {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      gap: 0.3rem;
+    }
+
+    ul.bullets li {
+      font-size: 0.82rem;
+      font-family: 'Arial', sans-serif;
+      color: var(--text);
+      padding-left: 1rem;
+      position: relative;
+      line-height: 1.5;
+    }
+
+    ul.bullets li::before {
+      content: '·';
+      position: absolute;
+      left: 0;
+      color: var(--accent);
+      font-weight: 700;
+    }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 680px) {
+      body { padding: 0; }
+      .page { grid-template-columns: 1fr; }
+      .sidebar { padding: 2rem 1.2rem; }
+      .main { padding: 2rem 1.2rem; }
+      .name-block h1 { font-size: 1.6rem; }
+    }
+
+    /* Print */
+    @media print {
+      body { padding: 0; background: white; }
+      .page { box-shadow: none; max-width: 100%; }
+    }
+  </style>
+</head>
+<body>
+<div class="page">
+
+  <!-- ── SIDEBAR ── -->
+  <aside class="sidebar">
+
+    <div class="name-block">
+      <h1>Oksana<br>Luchko</h1>
+      <div class="title">QA Engineer</div>
+    </div>
+
+    <div>
+      <div class="section-label">Contact</div>
+      <ul class="contact-list">
+        <li><span class="icon">📞</span>+380 96 843 24 96</li>
+        <li><span class="icon">✉</span><a href="mailto:Sysen8474@gmail.com">Sysen8474@gmail.com</a></li>
+        <li><span class="icon">✈</span><a href="https://t.me/Sysen8474" target="_blank">@Sysen8474</a></li>
+        <li><span class="icon">in</span><a href="https://linkedin.com/in/oksana-luchko" target="_blank">linkedin.com/in/oksana-luchko</a></li>
+        <li><span class="icon">📍</span>Busk, Ukraine</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="section-label">Tech Skills</div>
+      <ul class="skill-list">
+        <li>AI tools: Claude, Cursor, ChatGPT</li>
+        <li>ADB / adb logcat</li>
+        <li>TestRail / Qase / QA Vault</li>
+        <li>ClickUp / Jira / Confluence</li>
+        <li>Notion</li>
+        <li>Postman / Swagger</li>
+        <li>SQL (basic, MySQL)</li>
+        <li>Chrome DevTools</li>
+        <li>Figma</li>
+        <li>Jenkins</li>
+        <li>GitHub / GitHub CLI</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="section-label">Soft Skills</div>
+      <div class="pill-list">
+        <span class="pill">Teamwork</span>
+        <span class="pill">Communication</span>
+        <span class="pill">Decision-making</span>
+        <span class="pill">Problem-solving</span>
+        <span class="pill">Eager to learn</span>
+      </div>
+    </div>
+
+    <div>
+      <div class="section-label">Languages</div>
+      <ul class="lang-list">
+        <li>English — Upper-Intermediate / B2</li>
+        <li>German — Elementary</li>
+        <li>Ukrainian — Native</li>
+      </ul>
+    </div>
+
+    <div>
+      <div class="section-label">Education</div>
+
+      <div class="edu-block">
+        <div class="school">Ivan Franko National University of Lviv</div>
+        <div class="period">09.2002 – 07.2007</div>
+        <div class="degree">Master in Economics, "Management of Organizations"</div>
+      </div>
+
+      <div class="edu-block">
+        <div class="school">Ivan Franko National University of Lviv</div>
+        <div class="period">09.2008 – 07.2012</div>
+        <div class="degree">Postgraduate training in Law</div>
+      </div>
+
+      <div class="edu-block">
+        <div class="school">IT school GoIT</div>
+        <div class="period">09.2023 – 01.2024</div>
+        <div class="degree">QA Engineer Manual</div>
+      </div>
+    </div>
+
+  </aside>
+
+  <!-- ── MAIN ── -->
+  <main class="main">
+
+    <section>
+      <div class="main-section-label">About Me</div>
+      <p class="about-text">
+        Detail-oriented QA Engineer with hands-on experience in manual testing of web, desktop, and Android mobile applications, API testing, and database validation. Skilled in writing test cases, managing full bug lifecycles, and testing complex multi-role, real-time, and multi-tenant systems on commercial outsourcing/outstaffing projects. Experienced in AI-driven QA workflows (Claude, Cursor): using AI for requirements analysis, test design, and log investigation while critically validating its output. Background in management and legal education strengthens analytical thinking and client communication.
+      </p>
+    </section>
+
+    <section>
+      <div class="main-section-label">Work Experience</div>
+
+      <!-- Halo Lab -->
+      <div class="job">
+        <div class="job-header">
+          <span class="company">Halo Lab — QA Engineer</span>
+          <span class="period">01.2026 – 10.2026</span>
+        </div>
+        <div class="job-subtitle">AI-driven development teams (Cursor, Claude) · Notion</div>
+
+        <div class="ai-block">
+          <div class="ai-label">AI in QA Workflow — all projects</div>
+          <ul class="bullets">
+            <li>Used Claude and Cursor to analyze requirements and user stories, uncover gaps, and identify edge cases and risk areas before development</li>
+            <li>Generated and refined test scenarios and test cases with AI, reviewing them for accuracy and coverage instead of accepting output blindly</li>
+            <li>Used AI to analyze logs (adb logcat, WorkManager, Supabase) and build root-cause hypotheses, then verified them manually</li>
+            <li>Improved bug reports and QA documentation with AI assistance; accelerated repetitive QA routines</li>
+          </ul>
+        </div>
+
+        <div class="project-block">
+          <div class="project-name">Android Mobile App (client project)</div>
+          <div class="project-tech">Android mobile application — manual QA testing</div>
+          <ul class="bullets">
+            <li>Manual QA testing of a native Android application; worked with ADB (adb logcat, log filtering, device connection)</li>
+            <li>Tested offline scenarios, backup/restore flows, and retry logic</li>
+            <li>Analyzed WorkManager and Supabase logs to trace background task and sync behavior</li>
+            <li>Identified a critical, hard-to-reproduce data-isolation issue traceable only through log analysis (not via UI)</li>
+            <li>Authored evidence-based bug reports with logs, timeline, and root-cause hypothesis</li>
+            <li>Maintained test cases, test runs, and defects in QA Vault</li>
+          </ul>
+        </div>
+
+        <div class="project-block">
+          <div class="project-name">Real Estate SaaS Platform (client project)</div>
+          <div class="project-tech">Agent profiles, licensing verification, property listings</div>
+          <ul class="bullets">
+            <li>Wrote and executed manual test cases in Qase across core user flows (sign-up, agent profile, property listing)</li>
+            <li>Ran regression test suites on staging, identified and reported defects in ClickUp with structured bug reports</li>
+            <li>Tested UI/UX redesign (Agent Search) on dev/staging against production baseline</li>
+            <li>Worked across a multi-repo project (separate frontend/backend) in a no-local-clone corporate environment using github.dev</li>
+          </ul>
+        </div>
+
+        <div class="project-block">
+          <div class="project-name">Creator-Agency Management SaaS (client project)</div>
+          <div class="project-tech">Electron + React desktop, Hono API, PostgreSQL, WebSocket</div>
+          <ul class="bullets">
+            <li>Manual and regression testing of a multi-role Electron desktop application (Agency Owner, Chatter-VA, Manager, Trainee)</li>
+            <li>Maintained test cases and test runs in QA Vault and Qase; authored 100+ test cases covering core user flows</li>
+            <li>Tested real-time WebSocket features: fan chat, internal chat, notifications, clock-in heartbeat</li>
+            <li>Validated RBAC behavior across roles and multi-tenant data isolation</li>
+            <li>Performed integration testing of OF Connector sync (bidirectional chat and media sync)</li>
+          </ul>
+        </div>
+
+        <div class="project-block">
+          <div class="project-name">Multi-tenant AI SaaS Platform (client project)</div>
+          <div class="project-tech">Next.js, Supabase, Stripe environment</div>
+          <ul class="bullets">
+            <li>Tested a complex multi-tenant product: authentication, onboarding, admin portal, chat, outreach campaigns, and settings</li>
+            <li>Performed formal QA passes on features with PASS/CONCERNS/FAIL verdicts against acceptance criteria across 15+ stories/releases</li>
+            <li>Identified bugs across multiple layers: logic issues (state management in wizard flows), accessibility gaps (dialog aria semantics), and UI regressions (stacked modals)</li>
+            <li>Tested edge cases: form validation, security (tenant isolation, RLS policies), and performance (large datasets, concurrent operations)</li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Technomatix -->
+      <div class="job">
+        <div class="job-header">
+          <span class="company">Technomatix — QA Engineer</span>
+          <span class="period">09.2024 – 12.2025</span>
+        </div>
+        <div class="job-subtitle">Corporate learning (LMS) web platform, multi-role · Jira, Confluence</div>
+        <ul class="bullets">
+          <li>Wrote and maintained product documentation and instructions</li>
+          <li>Conducted regression, sanity, smoke, and mobile testing</li>
+          <li>Wrote test cases and checklists for product improvements</li>
+          <li>Gathered and agreed requirements with clients; ran demo presentations and releases</li>
+          <li>Tested API backend (Postman) and MySQL database, incl. data teardown and validation queries</li>
+          <li>Mentored trainers; analyzed functional modules and logs</li>
+          <li>Built test/release environments using Jenkins</li>
+        </ul>
+      </div>
+
+      <!-- i love my team -->
+      <div class="job">
+        <div class="job-header">
+          <span class="company">i love my team — QA Engineer</span>
+          <span class="period">07.2024 – 09.2024</span>
+        </div>
+        <ul class="bullets">
+          <li>Worked in Jira: created test cases, bug reports, tasks; tracked time</li>
+          <li>Created high-level checklists in Google Sheets</li>
+          <li>Reviewed requirements, Figma mockups, and test documentation</li>
+          <li>Performed portability and compatibility testing</li>
+        </ul>
+      </div>
+
+      <!-- Iryna Prudko -->
+      <div class="job">
+        <div class="job-header">
+          <span class="company">Iryna Prudko Website — QA Engineer, QA Group Lead</span>
+          <span class="period">03.2024 – 04.2024</span>
+        </div>
+        <ul class="bullets">
+          <li>Led the QA group; created high-level checklists and bug reports in Google Sheets</li>
+          <li>Created test statistics reports</li>
+          <li>Performed load testing (JMeter) and performance testing (Chrome DevTools)</li>
+          <li>Conducted portability, compatibility, smoke, and sanity testing; led walkthrough reviews</li>
+        </ul>
+      </div>
+
+    </section>
+  </main>
+
+</div>
+</body>
+</html>
